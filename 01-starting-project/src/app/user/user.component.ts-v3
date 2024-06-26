@@ -8,8 +8,6 @@ import {
   output,
 } from '@angular/core';
 
-import { User } from './user.model';
-
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -19,12 +17,9 @@ import { User } from './user.model';
 })
 export class UserComponent {
   //Component Input
-  // @Input({ required: true }) user!: {
-  //   id: string;
-  //   avatar: string;
-  //   name: string;
-  // };
-  @Input({ required: true }) user!: User;
+  @Input({ required: true }) id!: string;
+  @Input({ required: true }) avatar!: string;
+  @Input({ required: true }) name!: string;
 
   // Signal Input
   // avatar = input.required<string>();
@@ -32,7 +27,7 @@ export class UserComponent {
 
   // getter
   get imagePath() {
-    return 'assets/users/' + this.user.avatar;
+    return 'assets/users/' + this.avatar;
   }
 
   // computed imagePath
@@ -49,9 +44,6 @@ export class UserComponent {
 
   // event emit handler stays the same
   onSelectUser() {
-    this.select.emit(this.user.id);
+    this.select.emit(this.id);
   }
-
-  // Highlight on select feature
-  @Input({ required: true }) selected!: boolean;
 }
