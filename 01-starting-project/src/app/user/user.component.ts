@@ -5,6 +5,7 @@ import {
   Output,
   computed,
   input,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -34,8 +35,14 @@ export class UserComponent {
   //   return 'assets/users/' + this.avatar;
   // });
 
-  @Output() select = new EventEmitter();
+  // Emit Event - Output Decorator
+  // @Output() select = new EventEmitter();
+  @Output() select = new EventEmitter<string>();
 
+  // Emit Event - output
+  // select = output<string>();
+
+  // event emit handler stays the same
   onSelectUser() {
     this.select.emit(this.id);
   }
