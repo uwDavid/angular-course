@@ -1,10 +1,18 @@
-# Essentials
+# Angular Tutorial Part #1
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+This project demonstrates common concepts used in Angular:
+
+- Components
+- Template components
+- Component Input
+- Component Events, Event Listeners
+- Data Pipes
+- Directives (ng-content)
+- FormModule
 
 ## Development server
 
-Run `ng serve` or `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `ng serve` or `npm start`. The application will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
