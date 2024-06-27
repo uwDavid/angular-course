@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { InvestmentInput } from './investment-input.model';
@@ -12,13 +12,18 @@ import { InvestmentResultsComponent } from './investment-results/investment-resu
   imports: [HeaderComponent, UserInputComponent, InvestmentResultsComponent],
 })
 export class AppComponent {
+  // resultsData?: InvestmentResults[];
+
+  // Convert to Signal
+  resultsData = signal<InvestmentResults[] | undefined>(undefined);
+  // TS way to define 2 possible types
+
   // onCalculateInvestmentResults(data: {
   //   initialInvestment: number;
   //   duration: number;
   //   annualInvestment: number;
   //   expectedReturn: number;
   // }) {
-  resultsData?: InvestmentResults[];
 
   onCalculateInvestmentResults(data: InvestmentInput) {
     // de-structure data
@@ -43,6 +48,9 @@ export class AppComponent {
       });
     }
     // console.log(annualData);
-    this.resultsData = annualData;
+    // this.resultsData = annualData;
+
+    // convert to signal
+    this.resultsData.set(annualData);
   }
 }
