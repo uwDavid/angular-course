@@ -1,6 +1,6 @@
 # Angular Tutorial Part #1
 
-This project demonstrates common concepts used in Angular:
+This To-Do Application project demonstrates common concepts used in Angular:
 
 - Components
 - Template components

@@ -1,6 +1,7 @@
 # 4 - Financial Calculator Project
 
-This is a practice project to demo Angular concepts.
+This is a practice project to demo Angular concepts shown earlier.
+Different implementations are split out into their respective branches.
 
 ### Angular Tips
 
