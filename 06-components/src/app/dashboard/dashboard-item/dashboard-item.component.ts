@@ -6,9 +6,9 @@ import { Component, input, Input } from '@angular/core';
   imports: [],
   templateUrl: './dashboard-item.component.html',
   styleUrl: './dashboard-item.component.css',
-  host: {
-    class: 'dashboard-item',
-  },
+  // host: {
+  //   class: 'dashboard-item',
+  // },
 })
 export class DashboardItemComponent {
   // accept 2 inputs: image src + alt text
