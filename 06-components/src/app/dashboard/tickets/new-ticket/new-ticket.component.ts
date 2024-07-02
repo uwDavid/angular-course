@@ -1,4 +1,12 @@
-import { Component, ElementRef, viewChild, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  output,
+  Output,
+  viewChild,
+  ViewChild,
+} from '@angular/core';
 import { ControlComponent } from '../../../shared/control/control.component';
 import { FormsModule } from '@angular/forms';
 
@@ -17,7 +25,14 @@ export class NewTicketComponent {
   // arg = template variable
   // ElementRef is a wrapper around the template var -> need to specify underlying type
   // initially undefined - loads after init
+
+  // Add ticket feature
+  // @Output() add = new EventEmitter<{ title: string; text: string }>();
+  add = output<{ title: string; text: string }>();
+
   onSubmit(title: string, request: string) {
+    // add ticket feature
+    this.add.emit({ title: title, text: request });
     // this.form?.nativeElement.reset();
     this.form().nativeElement.reset();
   }
