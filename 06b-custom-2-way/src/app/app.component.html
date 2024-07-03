@@ -8,4 +8,5 @@
     <input type="number" step="1.0" [(ngModel)]="rectSize.height" />
   </p>
 </div>
-<app-rect />
+<app-rect [(size)]="rectSize" />
+<!-- bind size input property = obj in app component -->
