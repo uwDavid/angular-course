@@ -30,10 +30,22 @@ export class NewTicketComponent {
   // @Output() add = new EventEmitter<{ title: string; text: string }>();
   add = output<{ title: string; text: string }>();
 
-  onSubmit(title: string, request: string) {
-    // add ticket feature
-    this.add.emit({ title: title, text: request });
-    // this.form?.nativeElement.reset();
-    this.form().nativeElement.reset();
+  // onSubmit(title: string, request: string) {
+  //   // add ticket feature
+  //   this.add.emit({ title: title, text: request });
+  //   // this.form?.nativeElement.reset();
+  //   this.form().nativeElement.reset();
+  // }
+
+  // demo 2 way binding
+  enteredTitle = '';
+  enteredText = '';
+  // note - on html -> use ngModel
+  onSubmit() {
+    this.add.emit({ title: this.enteredTitle, text: this.enteredText });
+    // this.form()?.nativeElement.reset();
+    // we can reset values in another way - b/c we have 2 way binding
+    this.enteredTitle = '';
+    this.enteredText = '';
   }
 }
