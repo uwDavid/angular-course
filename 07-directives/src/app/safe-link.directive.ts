@@ -17,7 +17,13 @@ import { Directive, input } from "@angular/core";
 // Implement a dialog pop-up to confirm if user really want to leave
 export class SafeLinkDirective {
     // accept input for directive - use input() or @Input
-    queryParam = input("myapp"); // 'myapp' is default value
+    // queryParam = input("myapp"); // 'myapp' is default value
+
+    // To simplify input
+    // 1 - we can change the input() to appSafeLink
+    // appSafeLink = input("myapp");
+    // 2 - use alias-> to simplify the html attribute input
+    queryParam = input("myapp", { alias: "appSafeLink" });
 
     constructor() {
         console.log("SafeLinkDirective is active!");
