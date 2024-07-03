@@ -22,4 +22,18 @@ export class TicketsComponent {
 
     this.tickets.push(ticket);
   }
+
+  onCloseTicket(id: string) {
+    this.tickets = this.tickets.map((ticket) => {
+      // map - take older array => map to a new value
+      // arg = a func that applies to each element in array
+      if (ticket.id === id) {
+        return { ...ticket, status: 'closed' };
+        // ts ... spread operator => copy all values
+        // but override the status: to closed
+      }
+      // else - return unchanged ticket
+      return ticket;
+    });
+  }
 }

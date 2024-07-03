@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Ticket } from '../ticket.model';
 
 @Component({
@@ -21,4 +21,12 @@ export class TicketComponent {
     // update() automatically pass in the previous state as arg
     this.detailsVisible.update((wasVisible) => !wasVisible);
   }
+
+  // close ticket feature
+  close = output();
+
+  onMarkAsCompleted() {
+    this.close.emit();
+  }
+  // note: we listen for this close signal in tickets component
 }
