@@ -23,6 +23,10 @@ export class SafeLinkDirective {
     onConfirmLeavePage(event: MouseEvent) {
         const wantsToLeave = window.confirm("Do you want to leave the app?");
         if (wantsToLeave) {
+            const address = (event.target as HTMLAnchorElement).href;
+            //here we use a TS type casting
+            (event.target as HTMLAnchorElement).href = address + "?from=myapp";
+            // here we actually change the navigation url, append the from query param
             return;
         }
         // if user chooses no => cancel navigation
