@@ -1,4 +1,4 @@
-import { Directive } from "@angular/core";
+import { Directive, input } from "@angular/core";
 
 @Directive({
     selector: "a[appSafeLink]",
@@ -16,6 +16,9 @@ import { Directive } from "@angular/core";
 // Feature Overview
 // Implement a dialog pop-up to confirm if user really want to leave
 export class SafeLinkDirective {
+    // accept input for directive - use input() or @Input
+    queryParam = input("myapp"); // 'myapp' is default value
+
     constructor() {
         console.log("SafeLinkDirective is active!");
     }
@@ -25,7 +28,7 @@ export class SafeLinkDirective {
         if (wantsToLeave) {
             const address = (event.target as HTMLAnchorElement).href;
             //here we use a TS type casting
-            (event.target as HTMLAnchorElement).href = address + "?from=myapp";
+            (event.target as HTMLAnchorElement).href = address + "?from=" + this.queryParam();
             // here we actually change the navigation url, append the from query param
             return;
         }
