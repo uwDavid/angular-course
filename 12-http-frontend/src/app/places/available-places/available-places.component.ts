@@ -4,7 +4,7 @@ import { Place } from '../place.model';
 import { PlacesComponent } from '../places.component';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
 import { HttpClient } from '@angular/common/http';
-import { subscribeOn } from 'rxjs';
+import { map, subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-available-places',
@@ -30,13 +30,33 @@ export class AvailablePlacesComponent implements OnInit {
     // .get() returns an observable
     // we need to subscribe() to trigger the GET request
     // and then pass an observer function to handle the response
+
     const subscription = this.httpClient
-      .get('http://localhost:3000/places')
+      .get<{ places: Place[] }>('http://localhost:3000/places')
+      .pipe(map((resData) => resData.places))
+      // convert places: Place[] to just array Place[]
       .subscribe({
-        next: (resData) => {
-          console.log(resData);
+        next: (places) => {
+          // console.log(resData.places);
+          this.places.set(places);
         },
       });
+
+    // Note: we can define the format of response data
+    // expected response json: {places: placesData} - see backend app.js
+    // we define this as a model place.model.ts
+
+    // CONFIGURE HTTP REQUEST
+    // const subscription = this.httpClient
+    //   .get<{ places: Place[] }>('http://localhost:3000/places', {
+    //     observe: 'response',
+    //   })
+    //   .subscribe({
+    //     next: (response) => {
+    //       console.log(response.body?.places);
+    //       // response may not have a body
+    //     },
+    //   });
 
     // good practice to clean up subscription
     this.destroyRef.onDestroy(() => {
