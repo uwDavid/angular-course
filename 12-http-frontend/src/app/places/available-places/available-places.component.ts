@@ -4,7 +4,7 @@ import { Place } from '../place.model';
 import { PlacesComponent } from '../places.component';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
 import { HttpClient } from '@angular/common/http';
-import { map, subscribeOn } from 'rxjs';
+import { catchError, map, subscribeOn, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-available-places',
@@ -23,6 +23,8 @@ export class AvailablePlacesComponent implements OnInit {
   // or we can set it up at the root level
 
   private destroyRef = inject(DestroyRef);
+  isFetching = signal(false);
+  errorMsg = signal(''); // we set this signal if error occurs
 
   // Fetch data
   ngOnInit() {
@@ -31,14 +33,32 @@ export class AvailablePlacesComponent implements OnInit {
     // we need to subscribe() to trigger the GET request
     // and then pass an observer function to handle the response
 
+    this.isFetching.set(true);
+
     const subscription = this.httpClient
       .get<{ places: Place[] }>('http://localhost:3000/places')
-      .pipe(map((resData) => resData.places))
+      .pipe(
+        map((resData) => resData.places),
+        catchError((error) => {
+          console.log(error);
+          return throwError(() => new Error('Something went wrong'));
+        })
+      )
       // convert places: Place[] to just array Place[]
       .subscribe({
         next: (places) => {
           // console.log(resData.places);
           this.places.set(places);
+        },
+        error: (error: Error) => {
+          // console.log(error.message);
+          // this.errorMsg.set('Something went wrong. Try again later.');
+          this.errorMsg.set(error.message);
+        },
+        complete: () => {
+          this.isFetching.set(false);
+          // we can technically do this in next
+          // but this is safer, if we emit multiple events
         },
       });
 
