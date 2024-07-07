@@ -112,7 +112,7 @@ export class AvailablePlacesComponent implements OnInit {
     // we need to subscribe() in order to trigger the request
 
     const subscription = this.placesService
-      .addPlaceToUserPlaces(selectedPlace.id)
+      .addPlaceToUserPlaces(selectedPlace)
       .subscribe({
         next: (resData) => console.log(resData),
       });
