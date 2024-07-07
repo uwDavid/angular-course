@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +16,34 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class LoginComponent {
   form = new FormGroup({
     // key-value pair = one control || nested FormGroup
-    email: new FormControl(''), // empty initial value
-    password: new FormControl(''),
+    email: new FormControl('', {
+      validators: [Validators.email, Validators.required],
+    }), // empty initial value
+    password: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(6)],
+    }),
   });
 
+  get emailIsInvalid() {
+    return (
+      this.form.controls.email.touched &&
+      this.form.controls.email.dirty &&
+      this.form.controls.email.invalid
+    );
+  }
+
+  get passwordIsValid() {
+    return (
+      this.form.controls.password.touched &&
+      this.form.controls.password.dirty &&
+      this.form.controls.password.invalid
+    );
+  }
   onSubmit() {
-    this.form.value.email; // access form value
+    console.log(this.form);
+    // this.form.value.email; // access form value
+    const enteredEmail = this.form.value.email;
+    const enteredPassword = this.form.value.password;
+    console.log(enteredEmail, enteredPassword);
   }
 }
