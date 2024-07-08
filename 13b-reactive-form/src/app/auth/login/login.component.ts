@@ -1,10 +1,30 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { of } from 'rxjs';
+
+// Custom validator
+function mustContainQuestionMark(control: AbstractControl) {
+  if (control.value.includes('?')) {
+    return null;
+  }
+  return { doesNotContainQuestionMark: true };
+}
+
+// Async validator - sends req to server
+function emailIsUnique(control: AbstractControl) {
+  // we send this value to a server
+  if (control.value === 'test@example.com') {
+    return of(null);
+    // we must return an Observable
+  }
+  return of({ notUnique: true });
+}
 
 @Component({
   selector: 'app-login',
@@ -18,9 +38,14 @@ export class LoginComponent {
     // key-value pair = one control || nested FormGroup
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
+      asyncValidators: [emailIsUnique],
     }), // empty initial value
     password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)],
+      validators: [
+        Validators.required,
+        Validators.minLength(6),
+        mustContainQuestionMark,
+      ],
     }),
   });
 
