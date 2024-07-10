@@ -21,6 +21,22 @@ export class SignupComponent {
     password: new FormControl('', {
       validators: [Validators.required, Validators.minLength(6)],
     }),
+    confirmPassword: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(6)],
+    }),
+    firtName: new FormControl('', { validators: [Validators.required] }),
+    lastNmae: new FormControl('', { validators: [Validators.required] }),
+    street: new FormControl('', { validators: [Validators.required] }),
+    number: new FormControl('', { validators: [Validators.required] }),
+    postalCode: new FormControl('', { validators: [Validators.required] }),
+    city: new FormControl('', { validators: [Validators.required] }),
+    // drop-down (limited options)
+    // see html template
+    role: new FormControl<
+      'student' | 'teacher' | 'employee' | 'founder' | 'other'
+    >('student', { validators: [Validators.required] }),
+    // must be true to be submitted
+    agree: new FormControl(false, { validators: [Validators.required] }),
   });
 
   onSubmit() {
