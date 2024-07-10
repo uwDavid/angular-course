@@ -1,11 +1,36 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
+// function equalValues(control: AbstractControl) {
+//   const password = control.get('password')?.value;
+//   const confirmPassword = control.get('confirmPassword')?.value;
+
+//   if (password === confirmPassword) {
+//     return null;
+//   }
+//   return { passwordNotEqual: true };
+// }
+
+// Equal Validator Factory
+function equalValues(controlName1: string, controlName2: string) {
+  return (control: AbstractControl) => {
+    const val1 = control.get(controlName1)?.value;
+    const val2 = control.get(controlName2)?.value;
+
+    if (val1 === val2) {
+      return null;
+    }
+
+    return { valuesEqual: false };
+  };
+}
 
 @Component({
   selector: 'app-signup',
@@ -19,14 +44,20 @@ export class SignupComponent {
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
     }),
-    password: new FormGroup({
-      password: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
-      confirmPassword: new FormControl('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
-    }),
+    password: new FormGroup(
+      {
+        password: new FormControl('', {
+          validators: [Validators.required, Validators.minLength(6)],
+        }),
+        confirmPassword: new FormControl('', {
+          validators: [Validators.required, Validators.minLength(6)],
+        }),
+      },
+      {
+        //multi-input validation - form Group
+        validators: [equalValues('password', 'confirmPassword')],
+      }
+    ),
     firtName: new FormControl('', { validators: [Validators.required] }),
     lastNmae: new FormControl('', { validators: [Validators.required] }),
     address: new FormGroup({
