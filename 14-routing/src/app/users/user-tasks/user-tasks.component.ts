@@ -1,6 +1,7 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, Inject, inject, input } from '@angular/core';
 import { UsersService } from '../users.service';
 import {
+  ActivatedRoute,
   ActivatedRouteSnapshot,
   ResolveFn,
   RouterLink,
@@ -31,6 +32,16 @@ export class UserTasksComponent {
 
   // using Dynamic Route Data
   userName = input.required<string>();
+
+  // Another way to access route data
+  // private activatedRoute = inject(ActivatedRoute);
+  // ngOnInit(): void {
+  //   this.activatedRoute.data.subscribe({
+  //     next: (data) => {
+  //       console.log(data);
+  //     },
+  //   });
+  // }
 }
 
 // export function resolveUserName(){}
@@ -46,4 +57,12 @@ export const resolveUserName: ResolveFn<string> = (
     )?.name || '';
 
   return userName;
+};
+
+// Dynamic page title
+export const resolveTitle: ResolveFn<string> = (
+  ar: ActivatedRouteSnapshot,
+  rs: RouterStateSnapshot
+) => {
+  return resolveUserName(ar, rs) + "'s Tasks";
 };
