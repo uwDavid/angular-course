@@ -14,6 +14,7 @@ export const routes: Routes = [
   },
   {
     path: 'tasks', //<domain>/users/<uid>/tasks
+    runGuardsAndResolvers: 'always',
     component: TasksComponent,
     // runGuardsAndResolvers: 'paramsOrQueryParamsChange',
   },

@@ -16,6 +16,7 @@ export class NewTaskComponent {
   enteredTitle = signal('');
   enteredSummary = signal('');
   enteredDate = signal('');
+  submitted = false;
   private tasksService = inject(TasksService);
 
   // to navigate to url in functions
@@ -30,7 +31,7 @@ export class NewTaskComponent {
       },
       this.userId()
     );
-
+    this.submitted = true;
     // navigate to: /users/<uid>/tasks
     this.router.navigate(['/users', this.userId(), 'tasks'], {
       replaceUrl: true, //works like a redirect button, prevents users navigate here via back button
@@ -41,6 +42,9 @@ export class NewTaskComponent {
 export const canLeaveEditPage: CanDeactivateFn<NewTaskComponent> = (
   component
 ) => {
+  if (component.submitted) {
+    return true;
+  }
   if (
     component.enteredTitle() ||
     component.enteredDate() ||
